@@ -1,0 +1,3 @@
+from .base import Client
+
+class Reports(Client): ...
