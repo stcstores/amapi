@@ -1,7 +1,7 @@
 """Session manager for ampi."""
 
 from pathlib import Path
-from typing import Any, Callable, Self
+from typing import Self
 
 import toml
 from sp_api.base import Marketplaces
@@ -63,6 +63,8 @@ class AmapiSession:
         path to a file matching cls.CONFIG_FILENAME if one exists, otherwise returns
         None.
         """
+        if cls.CONFIG_FILENAME is None:
+            return None
         path = Path.cwd()
         while path.parent != path:
             config_file = path / cls.CONFIG_FILENAME
@@ -108,25 +110,3 @@ class AmapiSessionUS(AmapiSession):
     APP_ID_KEY = "LWA_APP_ID_US"
     CLIENT_SECRET_KEY = "LWA_CLIENT_SECRET_US"
     marketplace = Marketplaces.US
-
-
-def amazon_uk_session(func: Callable) -> Callable:
-    """Use an amapi session as a method decorator."""
-
-    def wrapper_amapi_session(*args: Any, **kwargs: Any) -> Any:
-        with AmapiSessionUK() as session:
-            kwargs["session"] = session
-            return func(*args, **kwargs)
-
-    return wrapper_amapi_session
-
-
-def amazon_us_session(func: Callable) -> Callable:
-    """Use an amapi session as a method decorator."""
-
-    def wrapper_amapi_session(*args: Any, **kwargs: Any) -> Any:
-        with AmapiSessionUS() as session:
-            kwargs["session"] = session
-            return func(*args, **kwargs)
-
-    return wrapper_amapi_session

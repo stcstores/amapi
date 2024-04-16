@@ -8,4 +8,6 @@ class LoginCredentialsNotSetError(ValueError):
 
     def __init__(self, *args: list[Any], **kwargs: Mapping[str, Any]) -> None:
         """Exception raised when creating an API session without credentials set."""
-        super().__init__("REFESH_TOKEN, LWA_APP_ID and LWA_CLIENT_SECRET must be set.")
+        super().__init__(
+            "REFRESH_TOKEN_KEY, APP_ID_KEY and CLIENT_SECRET_KEY must be set."
+        )
