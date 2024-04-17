@@ -4,14 +4,14 @@ import datetime as dt
 from typing import Any
 
 from sp_api.api import Reports
-from sp_api.base import ApiResponse, Client, SellingApiException
+from sp_api.base import ApiResponse, Client
 
 from .session import AmapiSession
 
 GET_FBA_ESTIMATE_FEES_REPORT = "GET_FBA_ESTIMATED_FBA_FEES_TXT_DATA"
 
 
-class Request:
+class BaseRequest:
     """Base class for amapi requests."""
 
     REQUEST_CLASS = Client
@@ -38,12 +38,7 @@ class Request:
     def call(self, *args: Any, **kwargs: Any) -> Any:
         """Make the request."""
         request = self.get_request()
-        try:
-            response = getattr(request, self.REQUEST_METHOD)(
-                **self.request_args(**kwargs)
-            )
-        except SellingApiException:
-            raise
+        response = getattr(request, self.REQUEST_METHOD)(**self.request_args(**kwargs))
         return self.handle_response(response)
 
     def handle_response(self, response: ApiResponse) -> Any:
@@ -51,7 +46,7 @@ class Request:
         return response.payload
 
 
-class GenerateReportRequest(Request):
+class GenerateReportRequest(BaseRequest):
     """Request class for generating reports."""
 
     REQUEST_CLASS = Reports
@@ -73,7 +68,7 @@ class GenerateReportRequest(Request):
         return payload["reportId"]
 
 
-class GetDocumentId(Request):
+class GetDocumentIdRequest(BaseRequest):
     """Request class for retriveing the ID of a generated report document."""
 
     REQUEST_CLASS = Reports
@@ -91,7 +86,7 @@ class GetDocumentId(Request):
         return payload["reportDocumentId"]
 
 
-class GetDocumentUrl(Request):
+class GetDocumentUrlRequest(BaseRequest):
     """Request class for retrieving document URLs."""
 
     REQUEST_CLASS = Reports
@@ -128,7 +123,7 @@ def request_document_id(session: AmapiSession, report_id: str) -> str:
         session (amapi.session.AmapiSession): A session instance.
         report_id (str): The ID of the report request.
     """
-    docutment_id = GetDocumentId(session).call(report_id)
+    docutment_id = GetDocumentIdRequest(session).call(report_id=report_id)
     return str(docutment_id)
 
 
@@ -139,5 +134,5 @@ def request_document_url(session: AmapiSession, document_id: str) -> str:
         session (amapi.session.AmapiSession): A session instance.
         document_id (str): The ID of the generated document.
     """
-    url = GetDocumentUrl(session).call(document_id)
+    url = GetDocumentUrlRequest(session).call(document_id=document_id)
     return str(url)
