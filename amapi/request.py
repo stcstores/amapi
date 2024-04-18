@@ -53,7 +53,7 @@ class GenerateReportRequest(BaseRequest):
     REQUEST_METHOD = "create_report"
 
     def request_args(
-        self, report_type: str, date: dt.datetime | None
+        self, report_type: str, date: dt.datetime | None = None
     ) -> dict[str, Any]:
         """Return request arguments."""
         args = super()._request_args()
