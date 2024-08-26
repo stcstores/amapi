@@ -566,13 +566,13 @@ pytest = ">=2.9.0"
 
 [[package]]
 name = "python-amazon-sp-api"
-version = "1.6.16"
+version = "1.6.19"
 description = "Python wrapper for the Amazon Selling-Partner API"
 optional = false
 python-versions = "*"
 files = [
-    {file = "python-amazon-sp-api-1.6.16.tar.gz", hash = "sha256:369dcbceef893d3c1871f94c6f047665fcfff40d15efa1ce15ac50a403e2f17c"},
-    {file = "python_amazon_sp_api-1.6.16-py3-none-any.whl", hash = "sha256:0f598e43da555b36bfe600a7d6aec861418e41d84b418cde034517abcc8334a4"},
+    {file = "python-amazon-sp-api-1.6.19.tar.gz", hash = "sha256:8c1e93657896a99b7969a0425e0e9c1239065cce0c53bdff4a328968f1e63405"},
+    {file = "python_amazon_sp_api-1.6.19-py3-none-any.whl", hash = "sha256:bfc7f36e73cebdeecdf0e2543d7c4e9f1b096322ea3f13f98c0bff3dc9077b33"},
 ]
 
 [package.dependencies]
