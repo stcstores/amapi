@@ -6,8 +6,8 @@ class Marketplaces(Enum):
     marketplace_id: str
     region: str
     def __init__(self, endpioint: str, marketplace_id: str, region: str): ...
-    UK: Self
-    US: Self
+    UK = Self
+    US = Self
 
 class SellingApiException(Exception): ...
 
